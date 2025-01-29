@@ -20,7 +20,21 @@
                 <h1>Log Workout</h1>
             </div>
         </div>
-
+    <!-- Display Logged Exercises -->
+    <section class="logged-exercises mt-5">
+        <h2>Logged Exercises</h2>
+        <ul id="exercise-list" class="list-group">
+            <li class="list-group-item">
+                <div class="d-flex flex-column">
+                    <span class="fw-bold">Squats</span>
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-sm btn-edit">Edit</button>
+                        <button class="btn btn-sm btn-delete">Delete</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
         <!-- Workout Log Form -->
         <section class="log-form">
             <form id="log-form" class="row g-3">
@@ -52,25 +66,7 @@
                     <button type="submit" class="btn btn-save w-100">Save</button>
                 </div>
             </form>
-        </section>
-
-        <!-- Display Logged Exercises -->
-        <section class="logged-exercises mt-5">
-            <h2>Logged Exercises</h2>
-            <ul id="exercise-list" class="list-group">
-                <li class="list-group-item">
-                    <div class="d-flex flex-column">
-                        <span class="fw-bold">Squats</span>
-                        <div class="d-flex gap-2 mt-2">
-                            <button class="btn btn-sm btn-edit">Edit</button>
-                            <button class="btn btn-sm btn-delete">Delete</button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </section>
-        
-        
+        </section>    
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
