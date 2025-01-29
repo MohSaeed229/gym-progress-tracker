@@ -1,0 +1,114 @@
+/* Apply Open Sans to the entire page by default */
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+}
+
+/* Headings (Lato) */
+h1, h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+
+/* Form Labels & Inputs */
+label {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+input, textarea {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+/* Form Container */
+.log-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+/* Form Group - Spacing Between Fields */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Input Fields & Textarea */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border 0.3s ease-in-out;
+}
+
+/* Focus Effect - Highlight Active Fields */
+input:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Textarea (Larger Input for Notes) */
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+/* General Button Styling */
+.btn {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Save Button - Primary */
+.btn-save {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Same hover effect as index page */
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Back Button */
+.btn-back {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+
+.btn-back:hover {
+    color: #0056b3;
+    transform: scale(1.05);
+}
