@@ -20,12 +20,15 @@
                 <h1>Log Workout</h1>
             </div>
         </header>
-        <!-- Filters Section -->
-        <section class="filters">
+<!-- Filters Section -->
+<section class="container mt-4">
+    <div class="card p-3">
+        <div class="row g-2 align-items-center">
+            
             <!-- Muscles Filter -->
-            <div>
-                <label for="muscle-filter">Filter by Muscles:</label>
-                <select id="muscle-filter">
+            <div class="col-md-4 col-12">
+                <label for="muscle-filter" class="form-label mb-0">Muscles:</label>
+                <select id="muscle-filter" class="form-select">
                     <option value="" disabled selected>Select Muscles</option>
                     <option value="chest">Chest</option>
                     <option value="back">Back</option>
@@ -35,11 +38,11 @@
                     <option value="triceps">Triceps</option>
                 </select>
             </div>
-        
+
             <!-- Time Interval Filter -->
-            <div>
-                <label for="time-filter">Filter by Time Interval:</label>
-                <select id="time-filter">
+            <div class="col-md-4 col-12">
+                <label for="time-filter" class="form-label mb-0">Time Interval:</label>
+                <select id="time-filter" class="form-select">
                     <option value="" disabled selected>Select Time Interval</option>
                     <option value="7">Last 7 Days</option>
                     <option value="14">Last 14 Days</option>
@@ -47,13 +50,20 @@
                     <option value="custom">Custom Date Range</option>
                 </select>
             </div>
-        
+
             <!-- Apply & Reset Buttons -->
-            <div>
-                <button id="apply-filters">Apply</button>
-                <button id="reset-filters">Reset</button>
+            <div class="col-md-4 col-12 d-flex gap-2 justify-content-md-end justify-content-center">
+                <button id="apply-filters" class="btn w-100 w-md-auto">Apply</button>
+                <button id="reset-filters" class="btn w-100 w-md-auto">Reset</button>
             </div>
-        </section>
+
+        </div>
+    </div>
+</section>
+
+
+
+
         
 
     <!-- Display Logged Exercises -->
