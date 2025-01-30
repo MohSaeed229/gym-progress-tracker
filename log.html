@@ -12,14 +12,50 @@
 
     <div class="container">
         <!-- Page Title & Back Button -->
-        <div class="row align-items-center mb-4">
+        <header class="row align-items-center mb-4">
             <div class="col-auto">
                 <a href="index.html" class="btn btn-back">←</a>
             </div>
             <div class="col-12 text-center mt-3">
                 <h1>Log Workout</h1>
             </div>
-        </div>
+        </header>
+        <!-- Filters Section -->
+        <section class="filters">
+            <!-- Muscles Filter -->
+            <div>
+                <label for="muscle-filter">Filter by Muscles:</label>
+                <select id="muscle-filter">
+                    <option value="" disabled selected>Select Muscles</option>
+                    <option value="chest">Chest</option>
+                    <option value="back">Back</option>
+                    <option value="legs">Legs</option>
+                    <option value="shoulders">Shoulders</option>
+                    <option value="biceps">Biceps</option>
+                    <option value="triceps">Triceps</option>
+                </select>
+            </div>
+        
+            <!-- Time Interval Filter -->
+            <div>
+                <label for="time-filter">Filter by Time Interval:</label>
+                <select id="time-filter">
+                    <option value="" disabled selected>Select Time Interval</option>
+                    <option value="7">Last 7 Days</option>
+                    <option value="14">Last 14 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="custom">Custom Date Range</option>
+                </select>
+            </div>
+        
+            <!-- Apply & Reset Buttons -->
+            <div>
+                <button id="apply-filters">Apply</button>
+                <button id="reset-filters">Reset</button>
+            </div>
+        </section>
+        
+
     <!-- Display Logged Exercises -->
     <section class="logged-exercises mt-5">
         <h2>Logged Exercises</h2>
