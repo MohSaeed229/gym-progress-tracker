@@ -121,3 +121,63 @@ textarea {
     color: #0056b3;
     transform: scale(1.05);
 }
+/* Filters Section Styling */
+.container .card {
+    background: #ffffff; /* White background for consistency */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.container .form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Dropdowns */
+.container .form-select {
+    border-radius: 8px;
+    padding: 8px;
+    border: 2px solid #ddd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover & Focus Effects */
+.container .form-select:hover,
+.container .form-select:focus {
+    border-color: #007bff; /* Blue border */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5); /* Glow effect */
+    outline: none;
+}
+
+/* Buttons */
+#apply-filters {
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #007bff;
+    color: white;
+}
+
+/* Hover Effect for Buttons */
+#apply-filters:hover {
+    background-color: #0056b3 !important; /* Darker shade on hover */
+    color: #333;
+    transform: scale(1.05);
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
+#reset-filters {
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #9fabb6;
+    color: white;
+}
+#reset-filters:hover {
+    background-color: #8a97a3 !important;/* Darker shade on hover */
+    color: #333;
+    transform: scale(1.05);
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
