@@ -86,66 +86,49 @@
 <div class="text-center mt-4">
     <button id="add-exercise-btn" class="btn ">+ Add Exercise</button>
 </div>
+<!-- Overlay (hidden by default) -->
+<div id="overlay" class="overlay"></div>
 
-<!-- Workout Log Form -->
-<section class="log-form mt-4">
-    <form id="log-form" class="row g-3">
-        <!-- Workout Date -->
-        <div class="col-12 col-md-6">
-            <label for="date">Workout Date:</label>
-            <input type="date" id="date" class="form-control" required>
-        </div>
-        
-        <!-- Muscle Trained Dropdown -->
-        <div class="col-12 col-md-6">
-            <label for="muscle-trained">Muscle Trained:</label>
-            <select id="muscle-trained" class="form-select" required>
-                <option value="" disabled selected>Select Muscle Group</option>
-                <option value="chest">Chest</option>
-                <option value="back">Back</option>
-                <option value="legs">Legs</option>
-                <option value="shoulders">Shoulders</option>
-                <option value="biceps">Biceps</option>
-                <option value="triceps">Triceps</option>
-            </select>
-        </div>
+<!-- Popup Form (hidden by default) -->
+<!-- Popup Form (hidden by default) -->
+<div id="exercise-popup" class="popup container-fluid">
+    <div class="popup-content card p-4">
+        <!-- Close Button -->
+        <button id="close-popup" class="close-btn">❌</button>
 
-        <!-- Exercise Name -->
-        <div class="col-12 col-md-6">
-            <label for="exercise">Exercise Name:</label>
-            <input type="text" id="exercise" class="form-control" placeholder="e.g., Bench Press" required>
-        </div>
+        <!-- Workout Log Form -->
+        <form id="log-form" class="row g-3">
+            <!-- Workout Date -->
+            <div class="col-12 col-md-6">
+                <label for="date">Workout Date:</label>
+                <input type="date" id="date" class="form-control" required>
+            </div>
 
-        <!-- Weights Used -->
-        <div class="col-12 col-md-6">
-            <label for="weights">Weights Used:</label>
-            <input type="text" id="weights" class="form-control" placeholder="Enter weight or 'No weights used'">
-        </div>
+            <!-- Muscle Trained Dropdown -->
+            <div class="col-12 col-md-6">
+                <label for="muscle-trained">Muscle Trained:</label>
+                <select id="muscle-trained" class="form-select" required>
+                    <option value="" disabled selected>Select Muscle Group</option>
+                    <option value="chest">Chest</option>
+                    <option value="back">Back</option>
+                    <option value="legs">Legs</option>
+                    <option value="shoulders">Shoulders</option>
+                    <option value="biceps">Biceps</option>
+                    <option value="triceps">Triceps</option>
+                </select>
+            </div>
 
-        <!-- Sets -->
-        <div class="col-12 col-md-6">
-            <label for="sets">Sets:</label>
-            <input type="number" id="sets" class="form-control" min="0" required>
-        </div>
+            <!-- Other Form Fields... -->
+            
+            <!-- Save Button -->
+            <div class="col-12">
+                <button type="submit" class="btn btn-save w-100">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-        <!-- Reps -->
-        <div class="col-12 col-md-6">
-            <label for="reps">Reps:</label>
-            <input type="number" id="reps" class="form-control" min="0" required>
-        </div>
 
-        <!-- Notes -->
-        <div class="col-12">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" class="form-control" placeholder="Optional: Add notes"></textarea>
-        </div>
-
-        <!-- Save Button -->
-        <div class="col-12">
-            <button type="submit" class="btn btn-save w-100">Save</button>
-        </div>
-    </form>
-</section>
 
 
     </div>
