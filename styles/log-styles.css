@@ -213,19 +213,29 @@ textarea {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     background: white;
     border-radius: 8px;
     width: 100%;
-    max-width: 600px; /* Allows Bootstrap to handle responsiveness */
-    display: none;
-    transition: opacity 0.3s ease;
+    max-width: 700px; /* Allows Bootstrap to handle responsiveness */
+    opacity: 0;
+    padding-top: 20px; /* Adds space inside the popup */
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.9); /* Slightly shrink when hidden */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
-
+.popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1); /* Expand smoothly */
+}
 /* Use Bootstrap classes to adjust padding and spacing */
 .popup-content {
     max-width: 100%;
+    padding: 20px; /* General padding */
+    padding-top: 30px; /* Extra space at the top */
 }
+
+
 
 
 /* Active States for Popup & Overlay */
