@@ -162,3 +162,20 @@ const deleteExercise = (exerciseItem) => {
 logForm.addEventListener("submit", addOrEditExercise);
 
 /* ---------- Exercise Filtering ---------- */
+
+
+
+
+// // Prevent dropdown from closing when clicking inside
+// document.querySelectorAll('.dropdown-menu').forEach(menu => {
+//     menu.addEventListener('click', (event) => {
+//         event.stopPropagation(); // Stops the dropdown from closing
+//     });
+// });
+
+// // Clear checkboxes without closing the dropdown
+// document.getElementById("clear-muscle-selection").addEventListener("click", () => {
+//     document.querySelectorAll(".dropdown-menu .form-check-input").forEach(checkbox => {
+//         checkbox.checked = false; // Uncheck all
+//     });
+// });

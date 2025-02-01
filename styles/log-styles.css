@@ -262,3 +262,65 @@ textarea {
 .close-btn:hover {
     color: #000;
 }
+
+/* Ensure the dropdown width matches the time filter */
+.multiselect-container {
+    width: auto !important; /* Prevents full width */
+    min-width: 220px; /* Ensures it doesn’t shrink too much */
+    border-radius: 5px;
+    padding: 8px;
+}
+
+/* Style the dropdown button to match Bootstrap select */
+.btn-multiselect {
+    width: 100%;
+    text-align: left;
+    border: 1px solid #ced4da;
+    background-color: white;
+    color: #495057;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+
+/* Make dropdown list items flex for proper alignment */
+.multiselect-container li {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 8px; /* Space between checkbox and text */
+}
+
+/* Make checkboxes and text appear in a straight row */
+.multiselect-container .checkbox {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure checkboxes are properly aligned */
+.multiselect-container input[type="checkbox"] {
+    margin: 0;
+    transform: scale(1.1); /* Slightly larger for better visibility */
+}
+
+/* Ensure text aligns properly next to checkboxes */
+.multiselect-container span {
+    flex-grow: 1;
+    white-space: nowrap; /* Prevent text from breaking lines */
+}
+
+
+/* Style the "Clear Selection" button */
+.multiselect-clear {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.multiselect-clear:hover {
+    background-color: #f8d7da;
+}

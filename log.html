@@ -24,41 +24,86 @@
 <section class="container mt-4">
     <div class="card p-3">
         <div class="row g-2 align-items-center">
-            
-            <!-- Muscles Filter -->
-            <div class="col-md-4 col-12">
-                <label for="muscle-filter" class="form-label mb-0">Muscles:</label>
-                <select id="muscle-filter" class="form-select">
-                    <option value="" disabled selected>Select Muscles</option>
-                    <option value="chest">Chest</option>
-                    <option value="back">Back</option>
-                    <option value="legs">Legs</option>
-                    <option value="shoulders">Shoulders</option>
-                    <option value="biceps">Biceps</option>
-                    <option value="triceps">Triceps</option>
-                </select>
-            </div>
+    
+<!-- Muscle Group Multi-Select -->
+<div class="col-md-4 col-12">
+    <label for="muscle-filter" class="form-label mb-0">Muscles:</label>
+    <div class="dropdown">
+        <button id="muscle-filter-btn" class="btn btn-outline-secondary w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Muscles
+        </button>
+        <ul class="dropdown-menu p-2 w-100">
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="chest" id="chest">
+                <label class="form-check-label" for="chest">Chest</label>
+            </li>
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="back" id="back">
+                <label class="form-check-label" for="back">Back</label>
+            </li>
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="legs" id="legs">
+                <label class="form-check-label" for="legs">Legs</label>
+            </li>
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="shoulders" id="shoulders">
+                <label class="form-check-label" for="shoulders">Shoulders</label>
+            </li>
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="biceps" id="biceps">
+                <label class="form-check-label" for="biceps">Biceps</label>
+            </li>
+            <li class="form-check">
+                <input class="form-check-input" type="checkbox" value="triceps" id="triceps">
+                <label class="form-check-label" for="triceps">Triceps</label>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="text-center">
+                <button id="clear-muscle-selection" class="btn btn-sm " type="button">Clear Selection</button>
+            </li>
+        </ul>
+    </div>
+</div>
 
+
+
+
+    
             <!-- Time Interval Filter -->
             <div class="col-md-4 col-12">
                 <label for="time-filter" class="form-label mb-0">Time Interval:</label>
                 <select id="time-filter" class="form-select">
-                    <option value="" disabled selected>Select Time Interval</option>
+                    <option value="" selected>Select Time Interval</option>
                     <option value="7">Last 7 Days</option>
                     <option value="14">Last 14 Days</option>
                     <option value="30">Last 30 Days</option>
                     <option value="custom">Custom Date Range</option>
                 </select>
             </div>
-
+    
+            <!-- Custom Date Range Inputs (Hidden Initially) -->
+            <div class="col-md-6 col-12 d-none" id="date-range">
+                <label for="start-date" class="form-label">Start Date:</label>
+                <input type="date" id="start-date" class="form-control" max="">
+            </div>
+    
+            <div class="col-md-6 col-12 d-none" id="date-range-end">
+                <label for="end-date" class="form-label">End Date:</label>
+                <input type="date" id="end-date" class="form-control" max="">
+            </div>
+    
             <!-- Apply & Reset Buttons -->
             <div class="col-md-4 col-12 d-flex gap-2 justify-content-md-end justify-content-center">
                 <button id="apply-filters" class="btn w-100 w-md-auto">Apply Filter(s)</button>
                 <button id="reset-filters" class="btn w-100 w-md-auto">Reset</button>
             </div>
-
+    
         </div>
     </div>
+    
+    <!-- No Exercises Found Message (Initially Hidden) -->
+    <p id="no-exercises-message" class="text-center fw-bold d-none">No exercises match your filters.</p>
+    
 </section>
 
 
@@ -72,10 +117,6 @@
     <ul id="exercise-list" class="list-group">
         <li class="list-group-item">
             <div class="d-flex flex-column">
-                <!-- <span class="fw-bold">Squats</span>
-                <div class="d-flex gap-2 mt-2">
-                    <button class="btn btn-sm btn-edit">Edit</button>
-                    <button class="btn btn-sm btn-delete">Delete</button> -->
                 </div>
             </div>
         </li>
