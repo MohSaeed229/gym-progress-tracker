@@ -144,3 +144,5 @@ const deleteExercise = (exerciseItem) => {
 
 // Attach submit event to form
 logForm.addEventListener("submit", addOrEditExercise);
+
+/* ---------- Exercise Filtering ---------- */
