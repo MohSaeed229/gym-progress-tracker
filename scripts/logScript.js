@@ -6,6 +6,22 @@ const closePopupBtn = document.querySelector("#close-popup"); // Close button in
 const overlay = document.querySelector("#overlay"); // The dimmed background overlay
 const logForm = document.querySelector("#log-form"); // Form
 const exerciseList = document.querySelector("#exercise-list"); // Logged Exercises List
+/* ---------- Restrict Future Dates for Adding & Editing ---------- */
+
+// Get the workout date input
+const workoutDateInput = document.querySelector("#date");
+
+// Set the max date to today
+const today = new Date().toISOString().split("T")[0];
+workoutDateInput.setAttribute("max", today);
+
+// Prevent users from selecting a future date manually
+workoutDateInput.addEventListener("change", () => {
+    if (workoutDateInput.value > today) {
+        alert("You cannot select a future date.");
+        workoutDateInput.value = today; // Reset to today if a future date is selected
+    }
+});
 
 // Variable to track the exercise being edited
 let editingExercise = null;
