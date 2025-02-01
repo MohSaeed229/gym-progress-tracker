@@ -313,7 +313,7 @@ textarea {
 
 
 /* Style the "Clear Selection" button */
-#clear-muscle-selection {
+#clear-muscle-selection,#clear-date-selection {
     color: red;
     text-align: center;
     font-weight: bold;
@@ -321,6 +321,6 @@ textarea {
     cursor: pointer;
 }
 
-#clear-muscle-selection:hover {
+#clear-muscle-selection:hover,#clear-date-selection:hover{
     background-color: #f8d7da;
 }
