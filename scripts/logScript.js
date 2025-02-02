@@ -162,6 +162,86 @@ const deleteExercise = (exerciseItem) => {
 logForm.addEventListener("submit", addOrEditExercise);
 
 /* ---------- Exercise Filtering ---------- */
+/* ---------- Exercise Selection Display ---------- */
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Elements for Muscle Filter
+    const muscleFilterBtn = document.getElementById("muscle-filter-btn");
+    const muscleCheckboxes = document.querySelectorAll(".form-check-input");
+    const clearMuscleSelectionBtn = document.getElementById("clear-muscle-selection");
+
+    // Elements for Time Interval Filter
+    const timeFilterBtn = document.getElementById("time-filter-btn");
+    const timeOptions = document.querySelectorAll(".time-option");
+    const startDateInput = document.getElementById("start-date");
+    const endDateInput = document.getElementById("end-date");
+    const dateRangeContainer = document.getElementById("date-range");
+    const dateRangeEndContainer = document.getElementById("date-range-end");
+    const clearDateSelectionBtn = document.getElementById("clear-date-selection");
+
+    let selectedMuscles = [];
+    let selectedTimeInterval = "";
+
+    // ----- Handle Muscle Selection -----
+    function updateMuscleButtonText() {
+        selectedMuscles = Array.from(muscleCheckboxes)
+            .filter(chk => chk.checked)
+            .map(chk => chk.labels[0].innerText);
+
+        muscleFilterBtn.textContent = selectedMuscles.length > 0 
+            ? selectedMuscles.join(", ") 
+            : "Select Muscles";
+    }
+
+    muscleCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", updateMuscleButtonText);
+    });
+
+    // Clear Muscle Selection
+    clearMuscleSelectionBtn.addEventListener("click", function () {
+        muscleCheckboxes.forEach(chk => chk.checked = false);
+        updateMuscleButtonText();
+    });
+
+    // ----- Handle Time Interval Selection -----
+    timeOptions.forEach(option => {
+        option.addEventListener("click", function (e) {
+            e.preventDefault();
+            selectedTimeInterval = this.getAttribute("data-value");
+
+            // Update button text
+            if (selectedTimeInterval === "custom") {
+                dateRangeContainer.classList.remove("d-none");
+                dateRangeEndContainer.classList.remove("d-none");
+                timeFilterBtn.textContent = "Custom Date: Select Range";
+            } else {
+                dateRangeContainer.classList.add("d-none");
+                dateRangeEndContainer.classList.add("d-none");
+                timeFilterBtn.textContent = this.textContent;
+            }
+        });
+    });
+
+    // Update Time Interval Button with Custom Dates
+    function updateCustomDateText() {
+        if (startDateInput.value && endDateInput.value) {
+            timeFilterBtn.textContent = `Custom Date: ${startDateInput.value} - ${endDateInput.value}`;
+        }
+    }
+
+    startDateInput.addEventListener("change", updateCustomDateText);
+    endDateInput.addEventListener("change", updateCustomDateText);
+
+    // Clear Date Selection
+    clearDateSelectionBtn.addEventListener("click", function () {
+        selectedTimeInterval = "";
+        timeFilterBtn.textContent = "Select Time Interval";
+        dateRangeContainer.classList.add("d-none");
+        dateRangeEndContainer.classList.add("d-none");
+        startDateInput.value = "";
+        endDateInput.value = "";
+    });
+});
 
 
 
