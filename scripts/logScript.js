@@ -330,3 +330,5 @@ document.addEventListener("DOMContentLoaded", function () {
         noExercisesMessage.classList.add("d-none");
     });
 });
+
+/* ---------- Date Filtering ---------- */
