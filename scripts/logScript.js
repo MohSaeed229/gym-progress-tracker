@@ -161,7 +161,7 @@ const deleteExercise = (exerciseItem) => {
 // Attach submit event to form
 logForm.addEventListener("submit", addOrEditExercise);
 
-/* ---------- Exercise Filtering ---------- */
+/* ---------- Exercise Filtering Functionalities ---------- */
 /* ---------- Exercise Selection Display ---------- */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -242,20 +242,91 @@ document.addEventListener("DOMContentLoaded", function () {
         endDateInput.value = "";
     });
 });
+// Prevent dropdown from closing when clicking inside
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', (event) => {
+        event.stopPropagation(); // Stops the dropdown from closing
+    });
+});
+
+// Clear checkboxes without closing the dropdown
+document.getElementById("clear-muscle-selection").addEventListener("click", () => {
+    document.querySelectorAll(".dropdown-menu .form-check-input").forEach(checkbox => {
+        checkbox.checked = false; // Uncheck all
+    });
+});
+
+/* ---------- Exercise Filtering ---------- */
 
 
+/* ---------- Muscle Filtering ---------- */
+document.addEventListener("DOMContentLoaded", function () {
+    const applyFiltersBtn = document.getElementById("apply-filters");
+    const resetFiltersBtn = document.getElementById("reset-filters");
+    const noExercisesMessage = document.getElementById("no-exercises-message");
 
+    const muscleCheckboxes = document.querySelectorAll(".form-check-input");
 
-// // Prevent dropdown from closing when clicking inside
-// document.querySelectorAll('.dropdown-menu').forEach(menu => {
-//     menu.addEventListener('click', (event) => {
-//         event.stopPropagation(); // Stops the dropdown from closing
-//     });
-// });
+    // ----- Step 1: Extract Selected Muscles -----
+    function getSelectedMuscles() {
+        return Array.from(muscleCheckboxes)
+            .filter(chk => chk.checked)
+            .map(chk => chk.labels[0].innerText.toLowerCase().trim());
+    }
 
-// // Clear checkboxes without closing the dropdown
-// document.getElementById("clear-muscle-selection").addEventListener("click", () => {
-//     document.querySelectorAll(".dropdown-menu .form-check-input").forEach(checkbox => {
-//         checkbox.checked = false; // Uncheck all
-//     });
-// });
+    // ----- Step 2: Extract Muscle Data from Exercise -----
+    function extractExerciseMuscle(exercise) {
+        const muscleElement = Array.from(exercise.querySelectorAll("small")).find(el =>
+            el.textContent.includes("Muscle Trained:")
+        );
+
+        if (!muscleElement) return null;
+
+        return muscleElement.textContent.split(":")[1].trim().toLowerCase();
+    }
+
+    // ----- Step 3: Apply Muscle Filter -----
+    applyFiltersBtn.addEventListener("click", function () {
+        console.log("Filtering function is running!");
+
+        const selectedMuscles = getSelectedMuscles();
+        console.log("Selected Muscles:", selectedMuscles);
+
+        const exercises = document.querySelectorAll("#exercise-list .list-group-item"); // Fetch exercises fresh
+        console.log("Exercises:", exercises);
+
+        let hasMatchingExercises = false;
+
+        exercises.forEach(exercise => {
+            const muscle = extractExerciseMuscle(exercise);
+            console.log("Exercise Muscle:", muscle);
+
+            if (!muscle) return;
+
+            const matchesMuscle = selectedMuscles.length === 0 || selectedMuscles.includes(muscle);
+
+            if (matchesMuscle) {
+                exercise.classList.remove("d-none");
+                hasMatchingExercises = true;
+            } else {
+                exercise.classList.add("d-none");
+            }
+        });
+
+        // Handle "No Exercises Found" Message
+        if (hasMatchingExercises) {
+            noExercisesMessage.classList.add("d-none");
+        } else {
+            noExercisesMessage.classList.remove("d-none");
+        }
+    });
+
+    // ----- Step 5: Reset Filters -----
+    resetFiltersBtn.addEventListener("click", function () {
+        const exercises = document.querySelectorAll("#exercise-list .list-group-item"); // Fetch fresh
+        muscleCheckboxes.forEach(chk => (chk.checked = false));
+
+        exercises.forEach(exercise => exercise.classList.remove("d-none"));
+        noExercisesMessage.classList.add("d-none");
+    });
+});
