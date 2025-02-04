@@ -259,13 +259,20 @@ document.getElementById("clear-muscle-selection").addEventListener("click", () =
 /* ---------- Exercise Filtering ---------- */
 
 
-/* ---------- Muscle Filtering ---------- */
+/* ---------- Muscle & Date Filtering ---------- */
 document.addEventListener("DOMContentLoaded", function () {
     const applyFiltersBtn = document.getElementById("apply-filters");
     const resetFiltersBtn = document.getElementById("reset-filters");
     const noExercisesMessage = document.getElementById("no-exercises-message");
 
+    // Muscle Filter Elements
     const muscleCheckboxes = document.querySelectorAll(".form-check-input");
+
+    // Date Filter Elements
+    const timeFilterBtn = document.getElementById("time-filter-btn");
+    const timeOptions = document.querySelectorAll(".time-option");
+    const startDateInput = document.getElementById("start-date");
+    const endDateInput = document.getElementById("end-date");
 
     // ----- Step 1: Extract Selected Muscles -----
     function getSelectedMuscles() {
@@ -274,61 +281,133 @@ document.addEventListener("DOMContentLoaded", function () {
             .map(chk => chk.labels[0].innerText.toLowerCase().trim());
     }
 
-    // ----- Step 2: Extract Muscle Data from Exercise -----
-    function extractExerciseMuscle(exercise) {
+    // ----- Step 2: Extract Selected Date Range -----
+    function getSelectedDateRange() {
+        let startDate = null, endDate = null;
+        const selectedInterval = timeFilterBtn.getAttribute("data-selected");
+
+        if (selectedInterval === "7") {
+            startDate = new Date();
+            startDate.setDate(startDate.getDate() - 7);
+        } else if (selectedInterval === "14") {
+            startDate = new Date();
+            startDate.setDate(startDate.getDate() - 14);
+        } else if (selectedInterval === "30") {
+            startDate = new Date();
+            startDate.setDate(startDate.getDate() - 30);
+        } else if (selectedInterval === "custom") {
+            if (startDateInput.value) startDate = new Date(startDateInput.value);
+            if (endDateInput.value) endDate = new Date(endDateInput.value);
+        }
+
+        return { startDate, endDate };
+    }
+
+    // ----- Step 3: Extract Exercise Data -----
+    function extractExerciseDetails(exercise) {
         const muscleElement = Array.from(exercise.querySelectorAll("small")).find(el =>
             el.textContent.includes("Muscle Trained:")
         );
+        const dateElement = Array.from(exercise.querySelectorAll("small")).find(el =>
+            el.textContent.includes("Date:")
+        );
 
-        if (!muscleElement) return null;
-
-        return muscleElement.textContent.split(":")[1].trim().toLowerCase();
+        return {
+            muscle: muscleElement ? muscleElement.textContent.split(":")[1].trim().toLowerCase() : null,
+            date: dateElement ? new Date(dateElement.textContent.split(":")[1].trim()) : null,
+        };
     }
 
-    // ----- Step 3: Apply Muscle Filter -----
+    // ----- Step 4: Apply Filters -----
     applyFiltersBtn.addEventListener("click", function () {
         console.log("Filtering function is running!");
-
+    
         const selectedMuscles = getSelectedMuscles();
         console.log("Selected Muscles:", selectedMuscles);
-
-        const exercises = document.querySelectorAll("#exercise-list .list-group-item"); // Fetch exercises fresh
-        console.log("Exercises:", exercises);
-
+    
+        const { startDate, endDate } = getSelectedDateRange();
+        console.log(`Selected Date Range: ${startDate} to ${endDate}`);
+    
+        const exercises = document.querySelectorAll("#exercise-list .list-group-item");
         let hasMatchingExercises = false;
-
+    
         exercises.forEach(exercise => {
-            const muscle = extractExerciseMuscle(exercise);
-            console.log("Exercise Muscle:", muscle);
-
-            if (!muscle) return;
-
+            const { muscle, date } = extractExerciseDetails(exercise);
+            console.log(`Exercise Muscle: ${muscle}, Exercise Date: ${date}`);
+    
+            // Check if muscle matches (if muscles are selected)
             const matchesMuscle = selectedMuscles.length === 0 || selectedMuscles.includes(muscle);
-
-            if (matchesMuscle) {
+    
+            // Check if date matches (if a date filter is applied)
+            const matchesDate = (!startDate && !endDate) || (date && (!startDate || date >= startDate) && (!endDate || date <= endDate));
+    
+            // Show the exercise if either filter matches
+            if (matchesMuscle && matchesDate) {
                 exercise.classList.remove("d-none");
                 hasMatchingExercises = true;
             } else {
                 exercise.classList.add("d-none");
             }
         });
-
-        // Handle "No Exercises Found" Message
-        if (hasMatchingExercises) {
-            noExercisesMessage.classList.add("d-none");
-        } else {
+    
+        // ✅ Show "No exercises found" only if ALL exercises are hidden
+        const allHidden = Array.from(exercises).every(exercise => exercise.classList.contains("d-none"));
+        if (allHidden) {
             noExercisesMessage.classList.remove("d-none");
+        } else {
+            noExercisesMessage.classList.add("d-none");
         }
     });
+    
+    
 
     // ----- Step 5: Reset Filters -----
     resetFiltersBtn.addEventListener("click", function () {
-        const exercises = document.querySelectorAll("#exercise-list .list-group-item"); // Fetch fresh
+        // Uncheck all muscle checkboxes
         muscleCheckboxes.forEach(chk => (chk.checked = false));
-
-        exercises.forEach(exercise => exercise.classList.remove("d-none"));
+    
+        // Reset muscle filter display text
+        const muscleFilterBtn = document.getElementById("muscle-filter-btn"); // Ensure you have this button reference
+        if (muscleFilterBtn) {
+            muscleFilterBtn.textContent = "Select Muscles";
+        }
+    
+        // Reset time interval
+        timeFilterBtn.textContent = "Select Time Interval";
+        timeFilterBtn.removeAttribute("data-selected");
+    
+        // Clear date inputs
+        startDateInput.value = "";
+        endDateInput.value = "";
+    
+        // Show all exercises
+        document.querySelectorAll("#exercise-list .list-group-item").forEach(exercise => 
+            exercise.classList.remove("d-none")
+        );
+    
+        // Hide "No Exercises Found" message
         noExercisesMessage.classList.add("d-none");
+    });
+    
+    
+
+    // ----- Step 6: Handle Time Interval Selection -----
+    timeOptions.forEach(option => {
+        option.addEventListener("click", function (e) {
+            e.preventDefault();
+            const selectedInterval = this.getAttribute("data-value");
+            timeFilterBtn.setAttribute("data-selected", selectedInterval);
+
+            if (selectedInterval === "custom") {
+                startDateInput.parentElement.classList.remove("d-none");
+                endDateInput.parentElement.classList.remove("d-none");
+                timeFilterBtn.textContent = "Custom Date: Select Range";
+            } else {
+                startDateInput.parentElement.classList.add("d-none");
+                endDateInput.parentElement.classList.add("d-none");
+                timeFilterBtn.textContent = this.textContent;
+            }
+        });
     });
 });
 
-/* ---------- Date Filtering ---------- */
