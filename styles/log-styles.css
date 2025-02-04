@@ -183,12 +183,16 @@ textarea {
 }
 #add-exercise-btn {
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 12px 24px; /* Adjusted padding for a better look */
     transition: background-color 0.3s ease, transform 0.2s ease;
     background-color: #28a745;
     color: white;
     font-weight: bold;
+    max-width: 250px; /* Limits the button width */
+    display: block;
+    margin: 0 auto; /* Centers the button */
 }
+
 
 #add-exercise-btn:hover {
     background-color: #218838;
