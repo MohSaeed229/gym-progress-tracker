@@ -221,6 +221,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+// Prevent selecting an end date before the start date
+startDateInput.addEventListener("change", function () {
+    if (startDateInput.value) {
+        endDateInput.setAttribute("min", startDateInput.value);
+    }
+});
 
     // Update Time Interval Button with Custom Dates
     function updateCustomDateText() {
@@ -379,7 +385,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Clear date inputs
         startDateInput.value = "";
         endDateInput.value = "";
-    
+
+     // Hide the custom date fields
+     startDateInput.parentElement.classList.add("d-none");
+     endDateInput.parentElement.classList.add("d-none");
+
         // Show all exercises
         document.querySelectorAll("#exercise-list .list-group-item").forEach(exercise => 
             exercise.classList.remove("d-none")
