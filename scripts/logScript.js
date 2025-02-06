@@ -72,8 +72,19 @@ const addOrEditExercise = (event) => {
     const reps = document.querySelector("#reps").value;
     const notes = document.querySelector("#notes").value.trim();
 
-    // If editing, update the existing exercise
+    // Create an exercise object
+    const exerciseData = {
+        name: exerciseName,
+        date: date,
+        muscle: muscle,
+        weight: weights,
+        sets: sets,
+        reps: reps,
+        notes: notes
+    };
+
     if (editingExercise) {
+        // Update the existing exercise
         editingExercise.innerHTML = `
             <div class="d-flex flex-column">
                 <span class="fw-bold">${exerciseName}</span>
@@ -89,17 +100,18 @@ const addOrEditExercise = (event) => {
             </div>
         `;
 
-        // Reattach event listeners for edit and delete buttons
-        attachExerciseListeners(editingExercise);
-        editingExercise.classList.remove("editing"); // Remove highlight
-        editingExercise = null; // Reset editing mode
+        // Update LocalStorage
+        updateExerciseInLocalStorage(exerciseData);
 
+        // Reattach event listeners
+        attachExerciseListeners(editingExercise);
+        editingExercise.classList.remove("editing");
+        editingExercise = null;
     } else {
-        // Create New Exercise Entry
+        // Create a new exercise entry
         const exerciseItem = document.createElement("li");
         exerciseItem.classList.add("list-group-item");
 
-        // Set HTML for New Exercise
         exerciseItem.innerHTML = `
             <div class="d-flex flex-column">
                 <span class="fw-bold">${exerciseName}</span>
@@ -115,15 +127,71 @@ const addOrEditExercise = (event) => {
             </div>
         `;
 
-        // Add New Exercise to List
+        // Add new exercise to the list
         exerciseList.appendChild(exerciseItem);
         attachExerciseListeners(exerciseItem);
+
+        // Save to LocalStorage
+        saveExerciseToLocalStorage(exerciseData);
     }
 
     // Clear Form & Close Popup
     logForm.reset();
     hidePopup();
 };
+
+// Function to Save Exercise to LocalStorage
+const saveExerciseToLocalStorage = (exercise) => {
+    let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+    exercises.push(exercise);
+    localStorage.setItem("exercises", JSON.stringify(exercises));
+};
+
+// Function to Update an Edited Exercise in LocalStorage
+const updateExerciseInLocalStorage = (updatedExercise) => {
+    let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+
+    // Find and update the exercise
+    exercises = exercises.map(exercise =>
+        exercise.name === updatedExercise.name && exercise.date === updatedExercise.date ? updatedExercise : exercise
+    );
+
+    localStorage.setItem("exercises", JSON.stringify(exercises));
+};
+
+// Function to Load Exercises from LocalStorage on Page Load
+const loadExercisesFromLocalStorage = () => {
+    let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+    exercises.forEach(exercise => displayExercise(exercise));
+};
+
+// Function to Display an Exercise in the UI
+const displayExercise = (exerciseData) => {
+    const exerciseItem = document.createElement("li");
+    exerciseItem.classList.add("list-group-item");
+
+    exerciseItem.innerHTML = `
+        <div class="d-flex flex-column">
+            <span class="fw-bold">${exerciseData.name}</span>
+            <small>📅 <strong>Date:</strong> ${exerciseData.date}</small>
+            <small>💪 <strong>Muscle Trained:</strong> ${exerciseData.muscle}</small>
+            <small>🏋️‍♂️ <strong>Weights Used:</strong> ${exerciseData.weight}</small>
+            <small>🔢 <strong>Sets:</strong> ${exerciseData.sets} | 🔄 <strong>Reps:</strong> ${exerciseData.reps}</small>
+            ${exerciseData.notes ? `<small>📝 <strong>Notes:</strong> ${exerciseData.notes}</small>` : ""}
+            <div class="d-flex gap-2 mt-2">
+                <button class="btn btn-sm btn-edit">Edit</button>
+                <button class="btn btn-sm btn-delete">Delete</button>
+            </div>
+        </div>
+    `;
+
+    // Append to exercise list
+    exerciseList.appendChild(exerciseItem);
+    attachExerciseListeners(exerciseItem);
+};
+
+// Load Exercises When Page Loads
+document.addEventListener("DOMContentLoaded", loadExercisesFromLocalStorage);
 
 // Attach event listeners to edit and delete buttons dynamically
 const attachExerciseListeners = (exerciseItem) => {
@@ -152,11 +220,22 @@ const editExercise = (exerciseItem) => {
 /* ---------- Exercise Deleting ---------- */
 
 // Delete Exercise Function
+// Delete Exercise Function (Removes from LocalStorage)
 const deleteExercise = (exerciseItem) => {
     if (confirm("Are you sure you want to delete this exercise?")) {
+        let exerciseName = exerciseItem.querySelector(".fw-bold").innerText;
+        let exerciseDate = exerciseItem.querySelector("small").innerText.split(": ")[1];
+
+        // Remove from LocalStorage
+        let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+        exercises = exercises.filter(exercise => !(exercise.name === exerciseName && exercise.date === exerciseDate));
+        localStorage.setItem("exercises", JSON.stringify(exercises));
+
+        // Remove from UI
         exerciseItem.remove();
     }
 };
+
 
 // Attach submit event to form
 logForm.addEventListener("submit", addOrEditExercise);
