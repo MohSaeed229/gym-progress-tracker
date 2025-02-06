@@ -131,8 +131,10 @@ const addOrEditExercise = (event) => {
         exerciseList.appendChild(exerciseItem);
         attachExerciseListeners(exerciseItem);
 
-        // Save to LocalStorage
+        // Save to LocalStorage and ensure sorting
         saveExerciseToLocalStorage(exerciseData);
+        loadExercisesFromLocalStorage(); // Refresh UI to reflect sorted order
+
     }
 
     // Clear Form & Close Popup
@@ -143,9 +145,20 @@ const addOrEditExercise = (event) => {
 // Function to Save Exercise to LocalStorage
 const saveExerciseToLocalStorage = (exercise) => {
     let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+
+    // Ensure date is stored in correct format
+    exercise.date = new Date(exercise.date).toISOString().split("T")[0];
+
+    // Add the new exercise
     exercises.push(exercise);
+
+    // 🔥 Sort before saving (Oldest First)
+    exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Save updated list to LocalStorage
     localStorage.setItem("exercises", JSON.stringify(exercises));
 };
+
 
 // Function to Update an Edited Exercise in LocalStorage
 const updateExerciseInLocalStorage = (updatedExercise) => {
@@ -162,8 +175,15 @@ const updateExerciseInLocalStorage = (updatedExercise) => {
 // Function to Load Exercises from LocalStorage on Page Load
 const loadExercisesFromLocalStorage = () => {
     let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
+
+    // 🔥 Sort exercises by date (Oldest First)
+    exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Clear UI before displaying sorted exercises
+    exerciseList.innerHTML = "";
     exercises.forEach(exercise => displayExercise(exercise));
 };
+
 
 // Function to Display an Exercise in the UI
 const displayExercise = (exerciseData) => {
@@ -233,6 +253,9 @@ const deleteExercise = (exerciseItem) => {
 
         // Remove from UI
         exerciseItem.remove();
+        localStorage.setItem("exercises", JSON.stringify(exercises));
+loadExercisesFromLocalStorage(); // Reload to maintain correct order
+
     }
 };
 
@@ -413,8 +436,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const { startDate, endDate } = getSelectedDateRange();
         console.log(`Selected Date Range: ${startDate} to ${endDate}`);
     
-        const exercises = document.querySelectorAll("#exercise-list .list-group-item");
-        let hasMatchingExercises = false;
+        const exercises = Array.from(document.querySelectorAll("#exercise-list .list-group-item"));
+        let filteredExercises = [];
     
         exercises.forEach(exercise => {
             const { muscle, date } = extractExerciseDetails(exercise);
@@ -426,18 +449,25 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if date matches (if a date filter is applied)
             const matchesDate = (!startDate && !endDate) || (date && (!startDate || date >= startDate) && (!endDate || date <= endDate));
     
-            // Show the exercise if either filter matches
+            // Add to filtered list if it matches both conditions
             if (matchesMuscle && matchesDate) {
-                exercise.classList.remove("d-none");
-                hasMatchingExercises = true;
-            } else {
-                exercise.classList.add("d-none");
+                filteredExercises.push(exercise);
             }
         });
     
-        // ✅ Show "No exercises found" only if ALL exercises are hidden
-        const allHidden = Array.from(exercises).every(exercise => exercise.classList.contains("d-none"));
-        if (allHidden) {
+        // 🔥 Ensure sorting before displaying filtered exercises (Oldest → Newest)
+        filteredExercises.sort((a, b) => {
+            const dateA = new Date(extractExerciseDetails(a).date);
+            const dateB = new Date(extractExerciseDetails(b).date);
+            return dateA - dateB; // Sorts from Oldest to Newest
+        });
+    
+        // Clear UI before displaying sorted, filtered results
+        exerciseList.innerHTML = "";
+        filteredExercises.forEach(exercise => exerciseList.appendChild(exercise));
+    
+        // ✅ Show "No exercises found" only if no exercises match the filter
+        if (filteredExercises.length === 0) {
             noExercisesMessage.classList.remove("d-none");
         } else {
             noExercisesMessage.classList.add("d-none");
@@ -445,38 +475,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     
+    
 
-    // ----- Step 5: Reset Filters -----
-    resetFiltersBtn.addEventListener("click", function () {
-        // Uncheck all muscle checkboxes
-        muscleCheckboxes.forEach(chk => (chk.checked = false));
-    
-        // Reset muscle filter display text
-        const muscleFilterBtn = document.getElementById("muscle-filter-btn"); // Ensure you have this button reference
-        if (muscleFilterBtn) {
-            muscleFilterBtn.textContent = "Select Muscles";
-        }
-    
-        // Reset time interval
-        timeFilterBtn.textContent = "Select Time Interval";
-        timeFilterBtn.removeAttribute("data-selected");
-    
-        // Clear date inputs
-        startDateInput.value = "";
-        endDateInput.value = "";
+// ----- Step 5: Reset Filters -----
+resetFiltersBtn.addEventListener("click", function () {
+    console.log("Resetting filters...");
 
-     // Hide the custom date fields
-     startDateInput.parentElement.classList.add("d-none");
-     endDateInput.parentElement.classList.add("d-none");
+    // Uncheck all muscle checkboxes
+    muscleCheckboxes.forEach(chk => (chk.checked = false));
 
-        // Show all exercises
-        document.querySelectorAll("#exercise-list .list-group-item").forEach(exercise => 
-            exercise.classList.remove("d-none")
-        );
-    
-        // Hide "No Exercises Found" message
-        noExercisesMessage.classList.add("d-none");
-    });
+    // Reset muscle filter display text
+    const muscleFilterBtn = document.getElementById("muscle-filter-btn");
+    if (muscleFilterBtn) {
+        muscleFilterBtn.textContent = "Select Muscles";
+    }
+
+    // Reset time interval
+    timeFilterBtn.textContent = "Select Time Interval";
+    timeFilterBtn.removeAttribute("data-selected");
+
+    // Clear date inputs
+    startDateInput.value = "";
+    endDateInput.value = "";
+
+    // Hide the custom date fields
+    startDateInput.parentElement.classList.add("d-none");
+    endDateInput.parentElement.classList.add("d-none");
+
+    // 🔥 Reload ALL exercises in the correct order (Oldest → Newest)
+    loadExercisesFromLocalStorage();
+
+    // ✅ Hide "No Exercises Found" message after reset
+    noExercisesMessage.classList.add("d-none");
+});
+
     
     
 
