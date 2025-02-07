@@ -74,6 +74,7 @@ const addOrEditExercise = (event) => {
 
     // Create an exercise object
     const exerciseData = {
+        id: editingExercise ? editingExercise.getAttribute("data-id") : '_' + Math.random().toString(36).substr(2, 9), // Preserve ID if editing, otherwise generate new one
         name: exerciseName,
         date: date,
         muscle: muscle,
@@ -82,6 +83,7 @@ const addOrEditExercise = (event) => {
         reps: reps,
         notes: notes
     };
+    
 
     if (editingExercise) {
         // Update the existing exercise
@@ -164,13 +166,21 @@ const saveExerciseToLocalStorage = (exercise) => {
 const updateExerciseInLocalStorage = (updatedExercise) => {
     let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
 
-    // Find and update the exercise
+    // Find and update ONLY the selected exercise using ID
     exercises = exercises.map(exercise =>
-        exercise.name === updatedExercise.name && exercise.date === updatedExercise.date ? updatedExercise : exercise
+        exercise.id === updatedExercise.id ? { ...exercise, ...updatedExercise } : exercise
     );
 
+    // 🔥 Ensure sorting after update (Oldest → Newest)
+    exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Save back to LocalStorage
     localStorage.setItem("exercises", JSON.stringify(exercises));
+
+    // Reload UI to reflect correct order
+    loadExercisesFromLocalStorage();
 };
+
 
 // Function to Load Exercises from LocalStorage on Page Load
 const loadExercisesFromLocalStorage = () => {
@@ -189,6 +199,8 @@ const loadExercisesFromLocalStorage = () => {
 const displayExercise = (exerciseData) => {
     const exerciseItem = document.createElement("li");
     exerciseItem.classList.add("list-group-item");
+    exerciseItem.setAttribute("data-id", exerciseData.id);
+
 
     exerciseItem.innerHTML = `
         <div class="d-flex flex-column">
