@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     
-        // 🔥 Ensure sorting before displaying filtered exercises (Oldest → Newest)
+        //  Ensure sorting before displaying filtered exercises (Oldest → Newest)
         filteredExercises.sort((a, b) => {
             const dateA = new Date(extractExerciseDetails(a).date);
             const dateB = new Date(extractExerciseDetails(b).date);
@@ -514,7 +514,7 @@ resetFiltersBtn.addEventListener("click", function () {
     startDateInput.parentElement.classList.add("d-none");
     endDateInput.parentElement.classList.add("d-none");
 
-    // 🔥 Reload ALL exercises in the correct order (Oldest → Newest)
+    //  Reload ALL exercises in the correct order (Oldest → Newest)
     loadExercisesFromLocalStorage();
 
     // ✅ Hide "No Exercises Found" message after reset
