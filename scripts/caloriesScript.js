@@ -8,16 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const goalSelect = document.getElementById("goal");
     const calculateBtn = document.getElementById("calculate-btn");
     const resetBtn = document.getElementById("reset-btn");
-    const resultDisplay = document.getElementById("result");
+    const resultDisplay = document.getElementById("calories-result");
 
     // ----- Step 2: Define Constants for Activity Levels -----
     const activityMultipliers = {
-        "sedentary": 1.2,               // Little to no exercise
-        "light": 1.375,                 // Light exercise (1-3 days/week)
-        "moderate": 1.55,               // Moderate exercise (3-5 days/week)
-        "active": 1.725,                // Active (6-7 days/week)
-        "very-active": 1.9              // Very intense exercise
+        "1.2": 1.2, 
+        "1.375": 1.375, 
+        "1.55": 1.55, 
+        "1.725": 1.725, 
+        "1.9": 1.9
     };
+    
 
     // ----- Step 3: Calculate Calories -----
     function calculateCalories() {
@@ -28,14 +29,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const height = parseInt(heightInput.value);
         const weight = parseFloat(weightInput.value);
         const selectedGender = document.querySelector("input[name='gender']:checked");
-        const activityLevel = activityLevelSelect.value;
+        const activityLevel = activityLevelSelect.value.trim();
+        if (!activityMultipliers[activityLevel]) {
+            console.log("Invalid activity level detected:", activityLevel);
+            alert("Please select a valid activity level.");
+            return;
+        }
+        
         const goal = goalSelect.value;
 
-        console.log("Age:", age, "Height:", height, "Weight:", weight, "Activity:", activityLevel, "Goal:", goal);
+        console.log("Age:", age, "Height:", height, "Weight:", weight, "Activity Level (from dropdown):", activityLevel, "Goal:", goal);
 
         // Validate inputs
-        if (isNaN(age) || age < 15 || age > 80) {
-            alert("Please enter a valid age between 15 and 80.");
+        if (isNaN(age) || age < 5 || age > 80) {
+            alert("Please enter a valid age between 5 and 80.");
             return;
         }
         if (isNaN(height) || height < 100 || height > 250) {
@@ -50,10 +57,14 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please select a gender.");
             return;
         }
-        if (!activityMultipliers[activityLevel]) {
-            alert("Please select an activity level.");
+
+        // ✅ Fix: Ensure activity level is properly checked
+        if (!activityLevel || !activityMultipliers.hasOwnProperty(activityLevel)) {
+            console.log("Invalid activity level detected:", activityLevel);
+            alert("Please select a valid activity level.");
             return;
         }
+
         if (!goal) {
             alert("Please select a goal.");
             return;
@@ -84,7 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Final Caloric Intake:", dailyCalories);
 
         // ----- Step 4: Display Result -----
-        resultDisplay.textContent = `Your daily calorie intake is ${Math.round(dailyCalories)} calories.`;
+        if (resultDisplay) { 
+            resultDisplay.textContent = `Your daily calorie intake is ${Math.round(dailyCalories)} calories.`;
+        }
     }
 
     // ----- Step 5: Reset Form -----
@@ -104,7 +117,9 @@ document.addEventListener("DOMContentLoaded", function () {
         goalSelect.selectedIndex = 0;
 
         // Reset result display
-        resultDisplay.textContent = "Your daily calorie intake will appear here.";
+        if (resultDisplay) { 
+            resultDisplay.textContent = "Your daily calorie intake will appear here.";
+        }
     }
 
     // ----- Step 6: Add Event Listeners -----
