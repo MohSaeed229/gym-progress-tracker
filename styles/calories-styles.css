@@ -1,0 +1,147 @@
+
+@import url('log-styles.css');
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f9fa;
+}
+/* Back Button */
+#back-button
+{
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+#back-button:hover {
+    color: #0056b3;
+   
+}
+/* Container for Form */
+.calories-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.calories-form h2 {
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Labels */
+.calories-form label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Input Fields & Select Dropdowns */
+.calories-form input,
+.calories-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Input Focus Effect */
+.calories-form input:focus,
+.calories-form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Gender Radio Buttons */
+.gender-options {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Height & Weight Input Group */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Small Labels for cm/kg */
+.input-group span {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* ----------------------------------- */
+/* BUTTON STYLES */
+/* ----------------------------------- */
+.calories-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.calories-buttons .btn {
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Calculate Button */
+#calculate-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+#calculate-btn:hover {
+    background-color: #218838;
+    color: #333;
+    transform: scale(1.05);
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Reset Button */
+#reset-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+#reset-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+    color: #333;
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* ----------------------------------- */
+/* RESULT BOX */
+/* ----------------------------------- */
+.result-box {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.result-box h3 {
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+
