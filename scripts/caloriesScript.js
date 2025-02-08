@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // ✅ Fix: Ensure activity level is properly checked
+        //  Fix: Ensure activity level is properly checked
         if (!activityLevel || !activityMultipliers.hasOwnProperty(activityLevel)) {
             console.log("Invalid activity level detected:", activityLevel);
             alert("Please select a valid activity level.");
