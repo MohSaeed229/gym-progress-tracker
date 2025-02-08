@@ -154,7 +154,7 @@ const saveExerciseToLocalStorage = (exercise) => {
     // Add the new exercise
     exercises.push(exercise);
 
-    // 🔥 Sort before saving (Oldest First)
+    //  Sort before saving (Oldest First)
     exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Save updated list to LocalStorage
@@ -171,7 +171,7 @@ const updateExerciseInLocalStorage = (updatedExercise) => {
         exercise.id === updatedExercise.id ? { ...exercise, ...updatedExercise } : exercise
     );
 
-    // 🔥 Ensure sorting after update (Oldest → Newest)
+    //  Ensure sorting after update (Oldest → Newest)
     exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Save back to LocalStorage
@@ -186,7 +186,7 @@ const updateExerciseInLocalStorage = (updatedExercise) => {
 const loadExercisesFromLocalStorage = () => {
     let exercises = JSON.parse(localStorage.getItem("exercises")) || [];
 
-    // 🔥 Sort exercises by date (Oldest First)
+    //  Sort exercises by date (Oldest First)
     exercises.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Clear UI before displaying sorted exercises
@@ -478,7 +478,7 @@ document.addEventListener("DOMContentLoaded", function () {
         exerciseList.innerHTML = "";
         filteredExercises.forEach(exercise => exerciseList.appendChild(exercise));
     
-        // ✅ Show "No exercises found" only if no exercises match the filter
+        //  Show "No exercises found" only if no exercises match the filter
         if (filteredExercises.length === 0) {
             noExercisesMessage.classList.remove("d-none");
         } else {
@@ -517,7 +517,7 @@ resetFiltersBtn.addEventListener("click", function () {
     //  Reload ALL exercises in the correct order (Oldest → Newest)
     loadExercisesFromLocalStorage();
 
-    // ✅ Hide "No Exercises Found" message after reset
+    // Hide "No Exercises Found" message after reset
     noExercisesMessage.classList.add("d-none");
 });
 

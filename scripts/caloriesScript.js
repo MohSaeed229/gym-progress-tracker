@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Reset result display
         if (resultDisplay) { 
-            resultDisplay.textContent = "Your daily calorie intake will appear here.";
+            resultDisplay.textContent = "Your recommended daily calorie intake will appear here.";
         }
     }
 
