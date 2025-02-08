@@ -52,4 +52,4 @@ The Gym Progress Tracker is a simple web app designed to help users log their wo
 4.**Workout Tutorials:** Integrate video or text-based workout tutorials for exercises.
 
 ## Summary
-A lightweight, browser-based app for tracking workouts and calorie intake. Built with HTML, CSS, and JavaScript. Just open it in a browser and start logging.
+A browser-based app for tracking workouts and calorie intake. Built with HTML, CSS, and JavaScript. Just open it in a browser and start logging.
