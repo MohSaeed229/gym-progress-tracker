@@ -544,3 +544,4 @@ resetFiltersBtn.addEventListener("click", function () {
     });
 });
 
+
