@@ -14,7 +14,7 @@ The Gym Progress Tracker is a simple web app designed to help users log their wo
    git clone https://github.com/yourusername/gym-progress-tracker.git
    cd gym-progress-tracker
 2. **Open index.html in a browser – No backend required.**
-3. **Ensure Font Awesome & Bootstrap are working – If icons don’t show, check CDN links in index.html.**
+3. **Ensure Font Awesome & Bootstrap are working – If icons don’t show, check CDN links in the html files.**
 4. **Test Features – Navigate between pages, log exercises, use the calculator, and toggle dark mode.**
 
 ## Project Structure
